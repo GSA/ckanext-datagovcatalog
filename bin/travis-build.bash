@@ -87,6 +87,7 @@ pip install -r pip-requirements.txt
 cd ..
 echo "-----------------------------------------------------------------"
 echo "Installing ckanext-datagovtheme and its requirements..."
+git clone https://github.com/ckan/ckanext-datagovtheme
 cd ckanext-datagovtheme
 
 python setup.py develop
