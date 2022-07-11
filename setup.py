@@ -24,8 +24,8 @@ setup(
     url='https://github.com/GSA/ckanext-datagovcatalog',
 
     # Author details
-    author='''GSA''',
-    author_email='''gsa@gsa.gov''',
+    author='Data.gov',
+    author_email='datagovhelp@gsa.gov',
 
     # Choose your license
     license='AGPL',
@@ -44,6 +44,7 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3'
     ],
 
 
@@ -61,7 +62,8 @@ setup(
         #
         # http://docs.ckan.org/en/latest/extensions/best-practices.html#add-third-party-libraries-to-requirements-txt
     ],
-
+    setup_requires=['wheel'],
+    
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
