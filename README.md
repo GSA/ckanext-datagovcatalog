@@ -1,4 +1,5 @@
 [![Github Actions](https://github.com/GSA/ckanext-datagovcatalog/actions/workflows/test.yml/badge.svg)](https://github.com/GSA/ckanext-datagovcatalog/actions)
+[![PyPI version](https://badge.fury.io/py/ckanext-datagovcatalog.svg)](https://badge.fury.io/py/ckanext-datagovcatalog)
 
 # ckanext-datagovcatalog
 
