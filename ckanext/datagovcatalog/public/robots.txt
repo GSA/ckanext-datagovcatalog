@@ -4,4 +4,4 @@ Disallow: /revision/
 Disallow: /dataset/*/history
 Disallow: /api/
 Crawl-Delay: 10
-Sitemap: https://test2.gov/test2/sitemapsitemap.xml
+Sitemap: https://filestore.data.gov/gsa/catalog-next/sitemap/sitemap.xml
