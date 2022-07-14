@@ -13,8 +13,4 @@ class MixinPlugin(object):
 
     # ITemplateHelpers
     def get_helpers(self):
-        from ckanext.datagovcatalog.helpers import sitemap
-
-        return {
-            'get_sitemap_url': sitemap.get_sitemap_url,
-        }
+        return {}
