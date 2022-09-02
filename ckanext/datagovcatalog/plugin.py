@@ -6,21 +6,24 @@ import ckan.plugins.toolkit as toolkit
 from ckanext.datagovcatalog.harvester.notifications import harvest_get_notifications_recipients
 from ckanext.datagovcatalog.helpers.packages import update_tracking_info_to_package
 
-try:
-    toolkit.requires_ckan_version("2.9")
-except toolkit.CkanVersionException:
-    from ckanext.datagovcatalog.plugin.pylons_plugin import MixinPlugin
-else:
-    from ckanext.datagovcatalog.plugin.flask_plugin import MixinPlugin
+toolkit.requires_ckan_version("2.9")
 
 log = logging.getLogger(__name__)
 
 
-class DatagovcatalogPlugin(MixinPlugin, plugins.SingletonPlugin):
+class DatagovcatalogPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
+
+    # IConfigurer
+    def update_config(self, config):
+        plugins.toolkit.add_public_directory(config, '../public')
+
+    # ITemplateHelpers
+    def get_helpers(self):
+        return {}
 
     def get_actions(self):
         return {
