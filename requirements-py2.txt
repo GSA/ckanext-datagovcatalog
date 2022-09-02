@@ -1,6 +1,0 @@
--e git+https://github.com/ckan/ckanext-harvest.git@6c9bb4fe9685d3c0e1e9abbc6a49d268bbfc4fe4#egg=ckanext-harvest
-
-ckantoolkit==0.0.3
-future==0.18.2
-pika==1.2.0
-six
