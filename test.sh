@@ -11,12 +11,12 @@ set -o pipefail
 TEST_CONFIG=/app/test.ini
 
 # Database is listening, but still unavailable. Just keep trying...
-while ! ckan -c $TEST_CONFIG --plugin=ckan db init; do
+while ! ckan -c $TEST_CONFIG db init; do
   echo Retrying in 5 seconds...
   sleep 5
 done
 
-ckan -c $TEST_CONFIG --plugin=ckanext-harvest harvester initdb
+ckan -c $TEST_CONFIG harvester initdb
 
 # start_ckan_development.sh &
 pytest --ckan-ini=$TEST_CONFIG --cov=ckanext.datagovcatalog --disable-warnings /app/ckanext/datagovcatalog/tests/
