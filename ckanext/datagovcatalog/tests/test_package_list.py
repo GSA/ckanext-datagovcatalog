@@ -2,9 +2,7 @@
 
 """Tests for tracking information."""
 from builtins import range
-from builtins import object
 from datetime import datetime, timedelta
-from ckan import model
 from ckan import plugins as p
 from ckan.lib.helpers import url_for
 
@@ -16,7 +14,6 @@ import ckan.tests.factories as factories
 from ckan.tests import helpers
 
 import pytest
-import six
 
 
 # @pytest.fixture
