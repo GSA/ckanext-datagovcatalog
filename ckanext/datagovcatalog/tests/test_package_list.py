@@ -2,18 +2,17 @@
 
 """Tests for tracking information."""
 from builtins import range
-from datetime import datetime, timedelta
-from ckan import plugins as p
-from ckan.lib.helpers import url_for
-
-p.toolkit.requires_ckan_version("2.9")
 from click.testing import CliRunner
-from ckan.cli import tracking, search_index
+from datetime import datetime, timedelta
+import pytest
 
+from ckan import plugins as p
+from ckan.cli import tracking, search_index
+from ckan.lib.helpers import url_for
 import ckan.tests.factories as factories
 from ckan.tests import helpers
 
-import pytest
+p.toolkit.requires_ckan_version("2.9")
 
 
 # @pytest.fixture
