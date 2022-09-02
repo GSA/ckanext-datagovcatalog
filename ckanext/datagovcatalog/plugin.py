@@ -11,7 +11,7 @@ toolkit.requires_ckan_version("2.9")
 log = logging.getLogger(__name__)
 
 
-class DatagovcatalogPlugin(MixinPlugin, plugins.SingletonPlugin):
+class DatagovcatalogPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IPackageController, inherit=True)
