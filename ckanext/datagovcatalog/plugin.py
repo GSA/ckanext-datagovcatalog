@@ -5,7 +5,6 @@ import ckan.plugins.toolkit as toolkit
 
 from ckanext.datagovcatalog.harvester.notifications import harvest_get_notifications_recipients
 from ckanext.datagovcatalog.helpers.packages import update_tracking_info_to_package
-from ckanext.datagovcatalog.plugin.flask_plugin import MixinPlugin
 
 toolkit.requires_ckan_version("2.9")
 
