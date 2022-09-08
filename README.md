@@ -35,9 +35,8 @@ Package                                                                | Notes
 
 CKAN version | Compatibility
 ------------ | -------------
-<=2.7        | no
-2.8          | yes
-2.9          | [complete](https://github.com/GSA/datagov-ckan-multi/issues/570)
+<=2.8        | no
+2.9          | yes
 
 To install ckanext-datagovcatalog:
 
@@ -124,7 +123,6 @@ In order to support multiple versions of CKAN, or even upgrade to new versions
 of CKAN, we support development and testing through the `CKAN_VERSION`
 environment variable.
 
-    $ make CKAN_VERSION=2.8 test
     $ make CKAN_VERSION=2.9 test
 
 # Registering ckanext-datagovcatalog on PyPI
