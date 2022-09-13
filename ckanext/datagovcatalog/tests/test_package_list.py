@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 """Tests for tracking information."""
-from builtins import range
 from click.testing import CliRunner
 from datetime import datetime, timedelta
 import pytest
