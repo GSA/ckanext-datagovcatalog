@@ -1,12 +1,15 @@
 import logging
-from ckan.lib.base import config
-from ckan.lib.navl.validators import not_empty
-from ckan import logic
+
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+from ckan import logic
+from ckan.lib.base import config
+from ckan.lib.navl.validators import not_empty
 
-from ckanext.datagovcatalog.harvester.notifications import harvest_get_notifications_recipients
-from ckanext.datagovcatalog.helpers.packages import update_tracking_info_to_package
+from ckanext.datagovcatalog.harvester.notifications import \
+    harvest_get_notifications_recipients
+from ckanext.datagovcatalog.helpers.packages import \
+    update_tracking_info_to_package
 
 toolkit.requires_ckan_version("2.9")
 
@@ -22,7 +25,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # IConfigurer
     def update_config(self, config):
-        plugins.toolkit.add_public_directory(config, '../public')
+        plugins.toolkit.add_public_directory(config, "../public")
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -30,7 +33,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def get_actions(self):
         return {
-            'harvest_get_notifications_recipients': harvest_get_notifications_recipients
+            "harvest_get_notifications_recipients": harvest_get_notifications_recipients
         }
 
     # IPackageController
@@ -38,18 +41,19 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def before_view(self, pkg_dict):
 
         # Add tracking information just for datasets
-        if pkg_dict.get('type', 'dataset') == 'dataset':
-            if toolkit.asbool(config.get('ckanext.datagovcatalog.add_packages_tracking_info', True)):
+        if pkg_dict.get("type", "dataset") == "dataset":
+            if toolkit.asbool(
+                config.get("ckanext.datagovcatalog.add_packages_tracking_info", True)
+            ):
                 # add tracking information.
                 # CKAN by default hide tracking info for datasets
 
                 # The pkg_dict received here could include some custom data
                 # (like organization_type from GeoDataGov extension)
                 # just get this new data and merge witgh previous pkg_dict version
-                new_pkg_dict = toolkit.get_action("package_show")({}, {
-                    'include_tracking': True,
-                    'id': pkg_dict['id']
-                })
+                new_pkg_dict = toolkit.get_action("package_show")(
+                    {}, {"include_tracking": True, "id": pkg_dict["id"]}
+                )
 
                 pkg_dict = update_tracking_info_to_package(pkg_dict, new_pkg_dict)
 
@@ -60,18 +64,14 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def create_package_schema(self):
         # let's grab the default schema from CKAN
         schema = logic.schema.default_create_package_schema()
-        schema['tags'].update({
-            'name': [not_empty, str]
-        })
+        schema["tags"].update({"name": [not_empty, str]})
         return schema
 
     def update_package_schema(self):
         # let's grab the default schema from CKAN
         schema = logic.schema.default_update_package_schema()
-        schema['tags'].update({
-            'name': [not_empty, str]
-        })
-        log.error('Trying to update package schema %s' % schema['tags'])
+        schema["tags"].update({"name": [not_empty, str]})
+        log.error("Trying to update package schema %s" % schema["tags"])
         return schema
 
     def is_fallback(self):
