@@ -1,5 +1,7 @@
 import logging
 from ckan.lib.base import config
+from ckan.lib.navl.validators import not_empty
+from ckan import logic
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
@@ -11,11 +13,12 @@ toolkit.requires_ckan_version("2.9")
 log = logging.getLogger(__name__)
 
 
-class DatagovcatalogPlugin(plugins.SingletonPlugin):
+class DatagovcatalogPlugin(plugins.SingletonPlugin, tk.DefaultDatasetForm):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IDatasetForm, inherit=True)
 
     # IConfigurer
     def update_config(self, config):
@@ -51,3 +54,30 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin):
                 pkg_dict = update_tracking_info_to_package(pkg_dict, new_pkg_dict)
 
         return pkg_dict
+
+    # Need to modify the schema to match import
+    #  function that customizes tag validation
+    def create_package_schema(self):
+        # let's grab the default schema from CKAN
+        schema = logic.schema.default_create_package_schema()
+        schema['tags'].update({
+            'name': [not_empty, str]
+        })
+        return schema
+
+    def update_package_schema(self):
+        # let's grab the default schema from CKAN
+        schema = logic.schema.default_update_package_schema()
+        schema['tags'].update({
+            'name': [not_empty, str]
+        })
+        log.error('Trying to update package schema %s' % schema['tags'])
+        return schema
+
+    def is_fallback(self):
+        return True
+
+    def package_types(self):
+        # This plugin doesn't handle any special package types, it just
+        # customizes tag validation (see above)
+        return []
