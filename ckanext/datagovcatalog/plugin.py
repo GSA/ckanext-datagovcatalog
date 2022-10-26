@@ -13,7 +13,7 @@ toolkit.requires_ckan_version("2.9")
 log = logging.getLogger(__name__)
 
 
-class DatagovcatalogPlugin(plugins.SingletonPlugin, tk.DefaultDatasetForm):
+class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IPackageController, inherit=True)
