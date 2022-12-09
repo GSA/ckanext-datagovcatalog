@@ -20,12 +20,11 @@ services:
     volumes:
       - ckan_storage:/var/lib/ckan
       - ./config:/etc/ckan
-      #- .:/srv/app/src_extensions/datagovcatalog
       - .:/app
-      #- ./test.ini:/srv/app/test.ini
+      - ./test.ini:/srv/app/test.ini
       
   db:
-    image: ckan/ckan-postgres-dev:${CKAN_VERSION}
+    image: ckan/ckan-postgres-dev:${SERVICES_VERSION}
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
