@@ -6,5 +6,6 @@ jobs:
     name: Lint + Test
     uses: gsa/data.gov/.github/workflows/ckan-test.yml@ckan-reusable-workflow
     with:
-      ext_name: datajson
+      ext_name: datagovcatalog
+      plugins: envvars harvest ckan_harvester datagovcatalog
     secrets: inherit
