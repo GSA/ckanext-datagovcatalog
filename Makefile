@@ -1,21 +1,21 @@
-CKAN_VERSION ?= 2.9
+CKAN_VERSION ?= 2.10
 COMPOSE_FILE ?= docker-compose.yml
 
 build: ## Build the docker containers
 	CKAN_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) build
 
 lint: ## Lint the code
-	CKAN_VERSION=2.9 docker-compose -f docker-compose.yml run --rm app flake8 /app --count --show-source --statistics --exclude ckan --max-line-length=127
+	CKAN_VERSION=$(CKAN_VERSION) docker-compose -f docker-compose.yml run --rm app flake8 /app --count --show-source --statistics --exclude ckan --max-line-length=127
 
 clean: ## Clean workspace and containers
 	find . -name *.pyc -delete
-	CKAN_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) down -v --remove-orphan
+	CKAN_VERSION=$(CKAN_VERSION) SERVICES_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) down -v --remove-orphan
 
 test: ## Run tests in a new container
-	CKAN_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) run --rm app /app/test.sh
+	CKAN_VERSION=$(CKAN_VERSION) SERVICES_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) run --rm app /app/test.sh
 
 up: ## Start the containers
-	CKAN_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) up
+	CKAN_VERSION=$(CKAN_VERSION) SERVICES_VERSION=$(CKAN_VERSION) docker-compose -f $(COMPOSE_FILE) up
 
 
 .DEFAULT_GOAL := help
