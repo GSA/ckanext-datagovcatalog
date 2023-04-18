@@ -3,3 +3,4 @@
 ckantoolkit>=0.0.7
 pika
 pyopenssl==22.1.0
+ckanext-envvars==0.0.3

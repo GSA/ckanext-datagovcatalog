@@ -10,12 +10,14 @@ from ckan.cli import tracking, search_index
 from ckan.lib.helpers import url_for
 import ckan.tests.factories as factories
 from ckan.tests import helpers
+from ckanext.datapusher.tests import get_api_token
 
 p.toolkit.requires_ckan_version("2.9")
 
 
 # @pytest.fixture
 @pytest.mark.ckan_config('ckanext.datagovcatalog.add_packages_tracking_info', True)
+@pytest.mark.ckan_config("ckan.datapusher.api_token", get_api_token())
 @pytest.mark.usefixtures('with_request_context')
 class TestPackageList(helpers.FunctionalTestBase):
 

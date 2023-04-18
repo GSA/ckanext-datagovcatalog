@@ -21,7 +21,7 @@ services:
       - ckan_storage:/var/lib/ckan
       - ./config:/etc/ckan
       - .:/app
-      - ./test.ini:/srv/app/test.ini
+      - ./test.ini:/app/test.ini
       
   db:
     image: ckan/ckan-postgres-dev:${SERVICES_VERSION}
