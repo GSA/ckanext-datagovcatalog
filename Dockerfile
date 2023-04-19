@@ -4,10 +4,7 @@ ARG CKAN_VERSION
 
 RUN pip install --upgrade pip
 
-COPY . /app
-WORKDIR /app
+COPY . $APP_DIR/
 
 # python cryptography takes a while to build
 RUN pip install -r requirements.txt -r dev-requirements.txt -e .
-
-WORKDIR ${APP_DIR}
