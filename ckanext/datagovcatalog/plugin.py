@@ -38,7 +38,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # IPackageController
 
-    def before_view(self, pkg_dict):
+    def before_dataset_view(self, pkg_dict):
 
         # Add tracking information just for datasets
         if pkg_dict.get("type", "dataset") == "dataset":
