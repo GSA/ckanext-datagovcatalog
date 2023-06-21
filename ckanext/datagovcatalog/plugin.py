@@ -64,13 +64,13 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def create_package_schema(self):
         # let's grab the default schema from CKAN
         schema = logic.schema.default_create_package_schema()
-        schema["tags"].update({"name": [not_empty, str]})
+        schema["tags"].update({"name": [not_empty, string]})
         return schema
 
     def update_package_schema(self):
         # let's grab the default schema from CKAN
         schema = logic.schema.default_update_package_schema()
-        schema["tags"].update({"name": [not_empty, str]})
+        schema["tags"].update({"name": [not_empty, string]})
         log.error("Trying to update package schema %s" % schema["tags"])
         return schema
 
@@ -81,3 +81,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         # This plugin doesn't handle any special package types, it just
         # customizes tag validation (see above)
         return []
+
+
+def string(value):
+    return str(value)
