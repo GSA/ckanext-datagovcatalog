@@ -7,10 +7,21 @@ services:
       context: .
       args:
         CKAN_VERSION: ${CKAN_VERSION}
-    env_file:
-      - .env
     environment:
       CKAN__PLUGINS: envvars harvest ckan_harvester datagovcatalog
+      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@db/ckan_test
+      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@db/datastore_test
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@db/datastore_test
+      CKAN_SOLR_URL: http://solr:8983/solr/ckan
+      CKAN_REDIS_URL: redis://redis:6379/
+      CKAN_DATAPUSHER_URL: http://localhost:8080/  # datapusher is not really enabled
+      CKAN_SITE_ID: default
+      CKAN_SITE_URL: http://ckan:5000
+      CKAN_SYSADMIN_NAME: admin
+      CKAN_SYSADMIN_PASSWORD: password
+      CKAN_SYSADMIN_EMAIL: your_email@example.com
+      CKAN__STORAGE_PATH: /var/lib/ckan
+      PYTHONDONTWRITEBYTECODE: 1
     ports:
       - "5000:5000"
     depends_on:
@@ -18,19 +29,18 @@ services:
       - redis
       - solr
     volumes:
-      - ckan_storage:/var/lib/ckan
-      - ./config:/etc/ckan
-      - .:/app
+      - ./ckanext:/srv/app/ckanext
+      - ./test.sh:/srv/app/test.sh
       - ./test.ini:/srv/app/test.ini
-      
+      - ./setup.py:/srv/app/setup.py
+      - /etc/timezone:/etc/timezone:ro
+      - ./docker-entrypoint.d/:/docker-entrypoint.d/
   db:
-    image: ckan/ckan-postgres-dev:${SERVICES_VERSION}
+    image: ckan/ckan-postgres-dev:2.9
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-    env_file:
-      - .env
     healthcheck:
       test: ["CMD", "pg_isready -u postgres"]
       interval: 10s
@@ -48,6 +58,5 @@ services:
       - "8983:8983"
 
 volumes:
-  ckan_storage:
   pg_data:
   solr_data:
