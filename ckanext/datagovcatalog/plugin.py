@@ -32,9 +32,13 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         return {}
 
     def get_actions(self):
-        return {
-            "harvest_get_notifications_recipients": harvest_get_notifications_recipients
-        }
+        harvest_next = toolkit.asbool(config.get('ckanext.datagovtheme.harvest_next', 'false'))
+        if harvest_next:
+            return {}
+        else:
+            return {
+                "harvest_get_notifications_recipients": harvest_get_notifications_recipients
+            }
 
     # IPackageController
 
