@@ -71,7 +71,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         # let's grab the default schema from CKAN
         schema = logic.schema.default_update_package_schema()
         schema["tags"].update({"name": [not_empty, string]})
-        log.error("Trying to update package schema %s" % schema["tags"])
+        log.info("Trying to update package schema %s" % schema["tags"])
         return schema
 
     def is_fallback(self):
