@@ -1,4 +1,3 @@
-import time
 import logging
 
 import ckan.plugins as plugins
