@@ -37,7 +37,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         """
         def safe_after_dataset_search(self, search_results, search_params):
             request = toolkit.request
-            if request.path.startswith('/api'):
+            if request and request.path.startswith('/api'):
                 log.info("Skipping tracking plugin for API call")
                 return search_results
 
