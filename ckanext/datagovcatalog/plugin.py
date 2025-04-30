@@ -36,13 +36,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         which speeds up responses when handling large CKAN datasets.
         """
         def safe_after_dataset_search(self, search_results, search_params):
-            request = toolkit.request
-            if request and request.path.startswith('/api'):
-                log.info("Skipping tracking plugin for API call")
-                return search_results
-
-            # Call the original method if not API
-            return safe_after_dataset_search.original(self, search_results, search_params)
+            return search_results
 
         # Backup original method
         safe_after_dataset_search.original = TrackingPlugin.after_dataset_search
