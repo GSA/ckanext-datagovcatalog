@@ -11,6 +11,9 @@ from ckanext.datagovcatalog.harvester.notifications import \
 from ckanext.datagovcatalog.helpers.packages import \
     update_tracking_info_to_package
 
+from ckanext.tracking.plugin import TrackingPlugin
+import types
+
 toolkit.requires_ckan_version("2.9")
 
 log = logging.getLogger(__name__)
@@ -26,6 +29,28 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # IConfigurer
     def update_config(self, config):
         plugins.toolkit.add_public_directory(config, "../public")
+
+        """
+        Monkey-patch TrackingPlugin.after_dataset_search to improve API performance.
+        Skips tracking summary lookups during /api/3/action/package_search requests,
+        which speeds up responses when handling large CKAN datasets.
+        """
+        def safe_after_dataset_search(self, search_results, search_params):
+            request = toolkit.request
+            if request and request.path.startswith('/api'):
+                log.info("Skipping tracking plugin for API call")
+                return search_results
+
+            # Call the original method if not API
+            return safe_after_dataset_search.original(self, search_results, search_params)
+
+        # Backup original method
+        safe_after_dataset_search.original = TrackingPlugin.after_dataset_search
+
+        # Apply patch
+        TrackingPlugin.after_dataset_search = types.MethodType(
+            safe_after_dataset_search, TrackingPlugin
+        )
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -75,7 +100,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         # let's grab the default schema from CKAN
         schema = logic.schema.default_update_package_schema()
         schema["tags"].update({"name": [not_empty, string]})
-        log.error("Trying to update package schema %s" % schema["tags"])
+        log.info("Trying to update package schema %s" % schema["tags"])
         return schema
 
     def is_fallback(self):
