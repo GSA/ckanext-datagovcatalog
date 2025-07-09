@@ -6,8 +6,6 @@ from ckan import logic
 from ckan.lib.base import config
 from ckan.lib.navl.validators import not_empty
 
-from ckanext.datagovcatalog.harvester.notifications import \
-    harvest_get_notifications_recipients
 from ckanext.datagovcatalog.helpers.packages import \
     update_tracking_info_to_package
 
@@ -57,9 +55,7 @@ class DatagovcatalogPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         return {}
 
     def get_actions(self):
-        return {
-            "harvest_get_notifications_recipients": harvest_get_notifications_recipients
-        }
+        return {}
 
     # IPackageController
 
